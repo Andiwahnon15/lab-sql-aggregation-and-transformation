@@ -28,4 +28,35 @@ SELECT title,
 	   IFNULL(rental_duration, 'not available') AS rental_duration
        FROM film
        ORDER BY title ASC;
--- 4. 
+-- CHALLENGE 2
+-- 1. A continuación, debe analizar las películas de la colección para obtener más información. Usando la tabla, determine: film
+-- 1.1 El número total de películas que se han estrenado.
+SELECT COUNT(*) AS total_films_relaesed
+FROM film;
+-- 1.2 El número de películas para cada clasificación.
+SELECT rating, COUNT(*) AS films_count
+FROM film
+GROUP BY rating;
+-- 1.3 El número de películas para cada clasificación, ordenando los resultados en orden descendente del número de películas. 
+-- Esto le ayudará a comprender mejor la popularidad de las diferentes clasificaciones de películas y a ajustar las decisiones de compra en 
+-- consecuencia.
+SELECT rating, COUNT(*) AS films_count
+FROM film
+GROUP BY rating
+ORDER BY films_count DESC;
+-- 2. Usando la tabla, determine: film
+-- 2.1 La duración media de la película para cada clasificación, y ordene los resultados en orden descendente de la duración media. 
+-- Redondea las longitudes medias a dos decimales. Esto ayudará a identificar las duraciones de películas más populares para cada categoría.
+SELECT rating, ROUND(AVG(length), 2) AS average_duration
+FROM film
+GROUP BY rating
+ORDER BY average_duration DESC;
+-- 2.2 Identifique qué clasificaciones tienen una duración media de más de dos horas para ayudar a seleccionar películas para los clientes 
+-- que prefieren películas más largas.
+SELECT rating, ROUND(AVG(length), 2) AS average_duration
+FROM film
+GROUP BY rating
+HAVING AVG(length) > 120;
+-- Bonus: determina qué apellidos no se repiten en el actor de la tabla.
+SELECT DISTINCT last_name
+FROM actor;
